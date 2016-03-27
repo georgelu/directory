@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+    <title>Sacramento Free Food and Grocery Resources</title>
+    <link rel="shortcut icon" href="../static/sun.ico" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.8/angular-filter.min.js"></script>
+    <script src="../static/directory.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/directory.css">
+</head>
+
+<body ng-controller="directoryCtrl" ng-app="App">
+
+    <div id="resourcesmod" class="col-lg-9">
+    <!--    <nav class="affix navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">I'm the navbar</a>
+                </div>
+            </div>
+        </nav>-->
+       <div class="navbar" data-spy="affix" data-offset-top="197">
+            <input class="search" ng-model="searchName" placeholder="Search" />
+            <button type="button" class="btn sort" data-sort="name" ng-click="sortType = 'name'">Sort Name<span ng-show="sortType == 'name' && !sortReverse">(x)</span></button>
+            <button type="button" class="btn sort" data-sort="neighborhood" ng-click="sortType = 'neighborhood'">Sort Neighborhood<span ng-show="sortType == 'neighborhood' && !sortReverse">(x)</span></button>
+            <button type="button" class="btn sort" data-sort="time" ng-click="sortType = 'timecode'">See Latest <span ng-show="sortType == 'timecode' && !sortReverse">(x)</span></button>
+            <button type="button" class="btn sort" data-sort="daycode" ng-click="sortType = 'daycode'">See Days <span ng-show="sortType == 'daycode' && !sortReverse">(x)</span></button>
+            <br>
+            <select class="form-control">
+                <option value="" disabled selected>Choose Neighborhoods</option>
+                <option ng-repeat="(key, value) in directory | filter:searchName | countBy: 'neighborhood'"> {{ key }} ({{ value }})</option>
+            </select>
+            <select class="form-control">
+                <option value="" disabled selected>Choose Food Service Type</option>
+                <option>Soup Kitchen</option>
+                <option>Groceries</option>
+                <option>Stuff</option>
+            </select>
+        </div>
+
+        <div ng-repeat="resource in directory | orderBy:sortType:sortReverse | filter:searchName" class="listing">
+             {{resource.name}} - <em>{{resource.address}}</em>
+             <p>{{resource.days}} -- {{resource.times}} <span class="red">(Coming up in 30 minutes)</span></p>
+             <p>Neighborhood: {{resource.neighborhood}}</p>
+             <p>{{resource.timecode}} -- {{resource.daycode}}</p>
+             <p>Brief description: <b>Type of food service</b></p>
+             <p>Requirements: <b>Do you need an ID? Proof of residence? Certain age?</b></p>
+             <a href="#">Click here for more information</a>
+        </div>
+
+    </div>
+    <div class="col-lg-3" id="sidebar">
+        <div id="summarymod" class="module">
+            <h3>Key Contacts</h3><ul>
+            <li>Find food, housing, legal, and health resources by calling 211 or visiting <a href="http://www.211sacramento.org/">211 online</a></li>
+            <li>General help: visit <a href="http://www.homelessresourcesca.org/Cities/Sacramento.html">Homeless Resources CA</a></li>
+            <li>Emergencies: call 911</li>
+        </ul>
+        </div>
+        <div id="feedbackmod" class="module">
+            <h3>Feedback, Suggestions, Mistakes</h3>
+            <form id="contactForm">
+                Email:<br>
+                <input type="text" name="email" placeholder="Your Email (not required)"/><br>
+                Category:<br>
+                <select class="form-control" name="category">
+                    <option value="" disabled selected>Choose Issue Type</option>
+                    <option value="wrong">Wrong data</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="inquiry">General Inquiries</option>
+                </select><br>
+                Comments:<br>
+                <textarea name="body" class="form-control" placeholder="Let us know how to improve"></textarea><br>
+                <input type="submit" class="sort" ng-click="submit = 'true'" value="submit" /><br> <span ng-show="submit == 'true'" class="red">Thank you! We'll respond to your comments soon.</span>
+            </form>
+        </div>
+        <div class="module">
+            <h3>About foodlist</h3>
+            We compile resources for low income or homeless residents of Sacramento.
+            <h3>Donate link -- maybe</h3>
+            Pay for hosting bills via bitcoin, paypal, etc.
+        </div>
+    </div>
+
+    <script>
+        var frm = $('#contactForm');
+        var seconds = new Date().getTime() / 1000;
+        frm.submit(function (ev) {
+            ev.preventDefault();
+            $.ajax({
+               url: "https://script.google.com/macros/s/AKfycbwlcTE8BXyd4B23JfK7jQYBLOpI2nH8ECtFlpJHd2m0UQCe4ex2/exec",
+               type: "post",
+               data: frm.serialize()+"&time="+seconds,
+               success: function (data) {
+                   console.log(frm.serialize()+"&time="+seconds);
+               }
+            });
+
+
+        });
+    </script>
+
+</body>
+
+</html>

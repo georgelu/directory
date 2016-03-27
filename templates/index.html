@@ -1,0 +1,50 @@
+<!doctype html>
+<html ng-app="App">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+    <script src="http://listjs.com/no-cdn/list.js"></script>
+    <script src="../static/ui-bootstrap-tpls-1.2.5.min.js"></script>
+    <script src="../static/directory.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/directory.css">
+</head>
+
+<body ng-controller="directoryCtrl">
+    <div id="resourcesmod" class="col-lg-9">
+        <div class=affix>
+            <input class="search" placeholder="Search" />
+            <button class="sort" data-sort="name">Sort Name</button>
+            <button class="sort" data-sort="neighborhood">Sort Neighborhood</button>
+            <button class="sort" data-sort="time">See Latest</button>
+        </div>
+        <ul class="list"></ul>
+        <ul>
+            <li ng-repeat="resource in directory">
+              {{directory.name}} - <em>{{directory.address}}</em>
+            </li>
+        </ul>
+    </div>
+    <div class="col-lg-3" id="sidebar">
+        <div id="summarymod">
+            <h2>Key Contacts</h2>
+            <p>More low-income or homeless resources: call 211 or visit <a href="http://www.211sacramento.org/">211 online</a></p>
+            <p>General help: visit <a href="http://www.homelessresourcesca.org/Cities/Sacramento.html">Homeless Resources CA</a>
+            <p>Emergencies: call 911</p>
+        </div>
+        <div id="feedbackmod">
+        </div>
+    </div>
+
+    <script>
+    var options = {
+        valueNames: [ 'name', 'neighborhood','time'],
+        item: '<li><h3 class="name"></h3><p class="neighborhood"></p><span class="time"></span></li>'
+    };
+    var values = [{"name":"Antelope Christian Center","address":"4533 Antelope Rd, Antelope, CA 95843","phone":"(916) 722-6108","days":"Every Fri","daycode":"F","time":"1:00PM - 2:30PM","timecode":"1:00 PM","zip":95843,"neighborhood":"Antelope","notes":"Food distribution","Requirements":0},{"name":"Victory Life Bible Church","address":"5697 Hillsdale Blvd, Sacramento, CA 95843","phone":"(916) 331-8306","days":"Mon","daycode":"M","time":"10:00 AM","timecode":"10:00 AM","zip":95843,"neighborhood":"Antelope","notes":"Food distribution","Requirements":0},{"name":"Youth Xplosion","address":"7909 Walerga Rd, ste 112 #274, Antelope, CA 95843","phone":"(916) 234-3270","days":"Every Sat, throughout week varies,  Every Wed","daycode":"W","time":"Sat 10:30 - 12:00PM, Wed 4:00PM - 6:30PM","timecode":"4:00 PM","zip":95843,"neighborhood":"Antelope","notes":"Congregate meal \u0026 food distribution","Requirements":0},{"name":"Youth Xplosion","address":"7909 Walerga Rd, ste 112 #274, Antelope, CA 95843","phone":"(916) 234-3270","days":"Every Sat, throughout week varies,  Every Wed","daycode":"S","time":"Sat 10:30 - 12:00PM, Wed 4:00PM - 6:30PM","timecode":"10:30 AM","zip":95843,"neighborhood":"Antelope","notes":"Congregate meal \u0026 food distribution","Requirements":0},{"name":"Northminster Presbyterian","address":"3235 Pope Ave Sactramento, CA 95821","phone":"(916) 487-5192","days":"2nd Wed","daycode":"W_2","time":"10:00AM - 12:00PM","timecode":"10:00 AM","zip":95821,"neighborhood":"Arden Arcade","notes":"USDA commodities","Requirements":0},{"name":"Town \u0026 Country Lutheran Church","address":"4049 Marconi Ave, Sacramento, CA 95821","phone":"(916) 481-2542","days":"4th Sat","daycode":"S_4","time":"4:00PM - 6:30PM","timecode":"4:00 PM","zip":95821,"neighborhood":"Arden Arcade","notes":"Food distribution","Requirements":0},{"name":"Woodside SDA Church","address":"3300 Eastern Ave., Sacramento, CA 95821","phone":"(916) 482-6444","days":"1st \u0026 3rd Wednesday","daycode":"W_1","time":"9:00AM - 12:00PM","timecode":"9:00 AM","zip":95821,"neighborhood":"Arden Arcade","notes":"Food distribution","Requirements":0},{"name":"Woodside SDA Church","address":"3300 Eastern Ave., Sacramento, CA 95821","phone":"(916) 482-6444","days":"1st \u0026 3rd Wednesday","daycode":"W_3","time":"9:00AM - 12:00PM","timecode":"9:00 AM","zip":95821,"neighborhood":"Arden Arcade","notes":"Food distribution","Requirements":0},{"name":"Powerhouse Christian Ministries","address":"2515 Cottage Way Sacramento, CA 95825","phone":"(916) 482-6774","days":"Tues, Wed, Thur, Sun","daycode":"T","time":"Tue 10AM - 11AM, Wed 7:45PM - 8:15PM, Thur 11:00AM - 12:00PM, Sun 1:00PM - 1:30PM","timecode":"10:00 AM","zip":95825,"neighborhood":"Arden Arcade","notes":"Food distribution","Requirements":0},{"name":"Powerhouse Christian Ministries","address":"2515 Cottage Way Sacramento, CA 95825","phone":"(916) 482-6774","days":"Tues, Wed, Thur, Sun","daycode":"W","time":"Tue 10AM - 11AM, Wed 7:45PM - 8:15PM, Thur 11:00AM - 12:00PM, Sun 1:00PM - 1:30PM","timecode":"7:45 PM","zip":95825,"neighborhood":"Arden Arcade","notes":"Food distribution","Requirements":0},{"name":"Powerhouse Christian Ministries","address":"2515 Cottage Way Sacramento, CA 95825","phone":"(916) 482-6774","days":"Tues, Wed, Thur, Sun","daycode":"TH","time":"Tue 10AM - 11AM, Wed 7:45PM - 8:15PM, Thur 11:00AM - 12:00PM, Sun 1:00PM - 1:30PM","timecode":"11:00 AM","zip":95825,"neighborhood":"Arden Arcade","notes":"Food distribution","Requirements":0},{"name":"Powerhouse Christian Ministries","address":"2515 Cottage Way Sacramento, CA 95825","phone":"(916) 482-6774","days":"Tues, Wed, Thur, Sun","daycode":"SU","time":"Tue 10AM - 11AM, Wed 7:45PM - 8:15PM, Thur 11:00AM - 12:00PM, Sun 1:00PM - 1:30PM","timecode":"1:00 PM","zip":95825,"neighborhood":"Arden Arcade","notes":"Food distribution","Requirements":0},{"name":"Saint Paul COGIC","address":"2771 Grove Ave, Sacramento, CA  95815","phone":"N/A","days":"Every Wed","daycode":"W","time":"11:00 AM","timecode":"11:00 AM","zip":95815,"neighborhood":"Arden-Arcade","notes":"Food distribution","Requirements":0},{"name":"El Camino Baptist Church","address":"2805 El Camino Ave, Sacramento, CA 95821","phone":"(916) 488-1522","days":"Every Fri except 5th","daycode":"F_1","time":"12:30PM - 2:30PM","timecode":"12:30 PM","zip":95821,"neighborhood":"Arden-Arcade","notes":"USDA commodities","Requirements":"ID and proof of address required for El Camino Baptist Church food bank."},{"name":"El Camino Baptist Church","address":"2805 El Camino Ave, Sacramento, CA 95821","phone":"(916) 488-1522","days":"Every Fri except 5th","daycode":"F_2","time":"12:30PM - 2:30PM","timecode":"12:30 PM","zip":95821,"neighborhood":"Arden-Arcade","notes":"USDA commodities","Requirements":"ID and proof of address required for El Camino Baptist Church food bank."},{"name":"El Camino Baptist Church","address":"2805 El Camino Ave, Sacramento, CA 95821","phone":"(916) 488-1522","days":"Every Fri except 5th","daycode":"F_3","time":"12:30PM - 2:30PM","timecode":"12:30 PM","zip":95821,"neighborhood":"Arden-Arcade","notes":"USDA commodities","Requirements":"ID and proof of address required for El Camino Baptist Church food bank."},{"name":"El Camino Baptist Church","address":"2805 El Camino Ave, Sacramento, CA 95821","phone":"(916) 488-1522","days":"Every Fri except 5th","daycode":"F_4","time":"12:30PM - 2:30PM","timecode":"12:30 PM","zip":95821,"neighborhood":"Arden-Arcade","notes":"USDA commodities","Requirements":"ID and proof of address required for El Camino Baptist Church food bank."},{"name":"S.V.D.P. Presentation","address":"4123 Robertson Ave, Sacramento, CA 95821","phone":"(916) 481-7441","days":"Tues, Fri \u0026 Sat","daycode":"T","time":"10:00AM - 10:30AM","timecode":"10:00 AM","zip":95821,"neighborhood":"Arden-Arcade","notes":"Congregate meal \u0026 food distribution","Requirements":0},{"name":"S.V.D.P. Presentation","address":"4123 Robertson Ave, Sacramento, CA 95821","phone":"(916) 481-7441","days":"Tues, Fri \u0026 Sat","daycode":"F","time":"10:00AM - 10:30AM","timecode":"10:00 AM","zip":95821,"neighborhood":"Arden-Arcade","notes":"Congregate meal \u0026 food distribution","Requirements":0},{"name":"S.V.D.P. Presentation","address":"4123 Robertson Ave, Sacramento, CA 95821","phone":"(916) 481-7441","days":"Tues, Fri \u0026 Sat","daycode":"S","time":"10:00AM - 10:30AM","timecode":"10:00 AM","zip":95821,"neighborhood":"Arden-Arcade","notes":"Congregate meal \u0026 food distribution","Requirements":0}];
+    var userList = new List('resourcesmod', options, values);
+
+    </script>
+
+</body>
+
+</html>
