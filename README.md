@@ -14,12 +14,12 @@ is a small python script that accepts JSON (exported from this [google doc](http
 
 <b>TODO:</b>
 Frontend:
--Pagination of events
--More sort/filtering
--Adjust language to be more understandable
--Add google maps directions/API integration
+* Pagination of events
+* More sort/filtering
+* Adjust language to be more understandable
+* Add google maps directions/API integration
 
 Backend:
--Host API (preferably on Flask)
--Add other data fields (is event part of a series? are there any requirements/restrictions for the event?)
--Add Twilio API
+* Host API (preferably on Flask)
+* Add other data fields (is event part of a series? are there any requirements/restrictions for the event?)
+* Add Twilio API
