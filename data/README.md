@@ -27,8 +27,13 @@ Metadata
 
 # Processed
 
-The pdf was processeds using [tabula](http://tabula.technology/)
-into two formats
+The pdf was processed using [tabula](http://tabula.technology/)
+to csv
 
 - tabula-food-neighborhood.csv
-- tabula-food-neighborhood.json
+
+Note: tabula-food-neighborhood.json also contains some metadata.
+
+A Makefile removes CR `\r` line endings from the tabula output to produce
+
+- food-neighborhood.csv
