@@ -1,7 +1,9 @@
 # directory
-A Sachacks food resources project
+A SacHacks food resources project
 
 _Demo:_ open [the index file](templates/angularindex.html) in a browser.
+
+The contents of the Feedback/Corrections form are on this [google doc](https://docs.google.com/spreadsheets/d/184QEwk06fxhsCmkmgL8FnLInUsw1FOtwJQSzWK_Z1Fg/edit?usp=sharing). Note that the timestamp is recorded in UNIX time and that there is no validation of fields.
 
 The project consists of several directories.
 
