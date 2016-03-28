@@ -7,16 +7,16 @@ The contents of the Feedback/Corrections form are on this [google doc](https://d
 
 The project consists of several directories.
 
-*templates*
+**templates**
 Contains front end angular/html files
 
-*static*
+**static**
 Contains resources such as JS, CSS, etc.
 
-*eventapi.py*
+**eventapi.py**
 is a small python script that accepts JSON (exported from this [google doc](https://docs.google.com/spreadsheets/d/1JwAlUxOp9ixiEl-AwyPmRLRFgGUR7I1qWzLog2rCydo/edit?usp=sharing)) and returns json to directory.json with the next event time provisioned in a JSON readable format.
 
-*TODO:*
+**TODO:** [![Card Ready to Work On](https://badge.waffle.io/georgelu/directory.svg?label=ready&title=Cards%20Ready%20To%20Work%20On)](https://waffle.io/georgelu/directory) (links to Waffle.io board.
 
 Frontend:
 * Pagination of events
@@ -29,3 +29,5 @@ Backend:
 * Host API (preferably on Flask)
 * Add other data fields (is event part of a series? are there any requirements/restrictions for the event?)
 * Add Twilio API
+
+
