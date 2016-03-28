@@ -19,19 +19,17 @@ is a small python script that accepts JSON (exported from this [google doc](http
 **directory.json**
 cleaned and refactored (currently: the first 21 rows on the Google Doc).
 
-**TODO:** [![Stories Ready to Work On](https://badge.waffle.io/georgelu/directory.svg?label=ready&title=Cards%20Ready%20To%20Work%20On)](https://waffle.io/georgelu/directory) (links to Waffle.io board, there is always a '?' in the badge if the repo is private).
+**TODO:** 
 
-Frontend:
-* Pagination of events
-* More sort/filtering
-* Adjust language to be more understandable
-* Add google maps directions/API integration
+See issues:
+* [frontend](https://github.com/georgelu/directory/issues?q=is%3Aissue+is%3Aopen+label%3Afrontend)
+* [backend](https://github.com/georgelu/directory/issues?q=is%3Aissue+is%3Aopen+label%3Abackend)
+* [data processing](https://github.com/georgelu/directory/issues?q=is%3Aissue+is%3Aopen+label%3A%22data+processing%22)
 
-Backend:
-* Document dependencies and environment needed to run `eventapi.py`
-* Host API (preferably on Flask)
-* Add other data fields (is event part of a series? are there any requirements/restrictions for the event?)
-* Add Twilio API
+Or, check out the Waffle.io board (note there is always a '?' in the badge if the repo is private):
+* [![Stories Ready to Work On](https://badge.waffle.io/georgelu/directory.svg?label=ready&title=Cards%20Ready%20To%20Work%20On)](https://waffle.io/georgelu/directory)
+
+
 
 ## Data cleaning process
 
