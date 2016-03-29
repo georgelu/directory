@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 <head>
     <title>Sacramento Free Food and Grocery Resources</title>
     <link rel="shortcut icon" href="../static/sun.ico" />
@@ -7,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.8/angular-filter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.5/ui-bootstrap-tpls.min.js"></script>
     <script src="../static/directory.js"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../static/directory.css">
@@ -14,20 +16,28 @@
 
 <body ng-controller="directoryCtrl" ng-app="App">
 
-    <div id="resourcesmod" class="col-lg-9">
-    <!--    <nav class="affix navbar navbar-default">
+    <div id="resourcesmod" class="col-lg-8">
+        <!--    <nav class="affix navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">I'm the navbar</a>
                 </div>
             </div>
         </nav>-->
-       <div class="navbar" data-spy="affix" data-offset-top="197">
+        <div class="navbar" data-spy="affix" data-offset-top="197">
             <input class="search" ng-model="searchName" placeholder="Search" />
-            <button type="button" class="btn sort" data-sort="name" ng-click="sortType = 'name'">Sort Name<span ng-show="sortType == 'name' && !sortReverse">(x)</span></button>
-            <button type="button" class="btn sort" data-sort="neighborhood" ng-click="sortType = 'neighborhood'">Sort Neighborhood<span ng-show="sortType == 'neighborhood' && !sortReverse">(x)</span></button>
-            <button type="button" class="btn sort" data-sort="time" ng-click="sortType = 'timecode'">See Latest <span ng-show="sortType == 'timecode' && !sortReverse">(x)</span></button>
-            <button type="button" class="btn sort" data-sort="daycode" ng-click="sortType = 'daycode'">See Days <span ng-show="sortType == 'daycode' && !sortReverse">(x)</span></button>
+            <button type="button" class="btn sort btn-info" data-sort="name" ng-click="sortType = 'name'">Sort Name
+                <span ng-show="sortType == 'name' && !sortReverse">(x)</span>
+            </button>
+            <button type="button" class="btn sort btn-info" data-sort="neighborhood" ng-click="sortType = 'neighborhood'">Sort Neighborhood
+                <span ng-show="sortType == 'neighborhood' && !sortReverse">(x)</span>
+            </button>
+            <button type="button" class="btn sort btn-info" data-sort="time" ng-click="sortType = 'timecode'">See Latest
+                <span ng-show="sortType == 'timecode' && !sortReverse">(x)</span>
+            </button>
+            <button type="button" class="btn sort btn-info" data-sort="daycode" ng-click="sortType = 'daycode'">See Days
+                <span ng-show="sortType == 'daycode' && !sortReverse">(x)</span>
+            </button>
             <br>
             <select class="form-control">
                 <option value="" disabled selected>Choose Neighborhoods</option>
@@ -41,62 +51,99 @@
             </select>
         </div>
 
-        <div ng-repeat="resource in directory | orderBy:sortType:sortReverse | filter:searchName" class="listing">
-             {{resource.name}} - <em>{{resource.address}}</em>
-             <p>{{resource.days}} -- {{resource.times}} <span class="red">(Coming up in 30 minutes)</span></p>
-             <p>Neighborhood: {{resource.neighborhood}}</p>
-             <p>{{resource.timecode}} -- {{resource.daycode}}</p>
-             <p>Brief description: <b>Type of food service</b></p>
-             <p>Requirements: <b>Do you need an ID? Proof of residence? Certain age?</b></p>
-             <a href="#">Click here for more information</a>
+        <div ng-repeat="resource in directory | orderBy:sortType:sortReverse | filter:searchName">
+            <div class="module" ng-class="{redleft : resource.notes == 'Food distribution', orangeleft : resource.notes == 'USDA commodities',pinkleft: resource.notes == 'Congregate meal & food distribution'}">
+                <button type="button" class="btn btn-info modalbutton" ng-click="open()">More</button>
+                <b>{{resource.notes}}</b> starting at {{resource.timecode}} {{resource.daycode}}
+                <br> Neighborhood: {{resource.neighborhood}}
+                <br>
+                <br> {{resource.days}} at {{resource.times}}
+                <br> {{resource.name}}
+                <br> {{resource.address}}
+                <br> {{resource.phone}}
+
+            </div>
+            <script type="text/ng-template" id="detailModal.html">
+                <div class="modal-header">
+                    <h3>More details on:</h3>
+                </div>
+                <div class="modal-body">
+                    More details on location, organization, etc.
+                    <br>
+                    Is this event is part of a series? Other details.
+                    <iframe
+                       width="300px"
+                       height="200px"
+                       frameborder="0" style="border:0"
+                       src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDtRBVZUB4tj8oX1dE0tOON0yMAzaU9KJ4&q=Space+Needle,Seattle+WA" allowfullscreen>
+                   </iframe>
+                   <br>
+                   <p>Want a twilio notification an hour before the event?</p>
+                   <input class="form-control" type="text" name="email" placeholder="Your phone number with area code" /><input type="submit" class="sort btn btn-info" ng-click="submit = 'true'" value="Send" />
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-warning" type="button" ng-click="cancel()">Close Details</button>
+                </div>
+            </script>
         </div>
 
     </div>
-    <div class="col-lg-3" id="sidebar">
+    <div class="col-lg-4" id="sidebar">
         <div id="summarymod" class="module">
-            <h3>Key Contacts</h3><ul>
-            <li>Find food, housing, legal, and health resources by calling 211 or visiting <a href="http://www.211sacramento.org/">211 online</a></li>
-            <li>General help: visit <a href="http://www.homelessresourcesca.org/Cities/Sacramento.html">Homeless Resources CA</a></li>
-            <li>Emergencies: call 911</li>
-        </ul>
+            <h3>For More Help:</h3>
+                <p>Free food, housing, legal, and health resources: <a href="http://www.211sacramento.org/">211 online</a> or call 211</p>
+                <br> <p>The People's Guide: <a href="http://www.sachousingalliance.org/resources/">Spanish and English guides</a></p>
+                <br> <p>More Resources: <a href="http://www.homelessresourcesca.org/Cities/Sacramento.html">Homeless Resources CA</a></p>
+                <br> <p>Emergencies: call 911</p>
+            </ul>
         </div>
         <div id="feedbackmod" class="module">
-            <h3>Feedback, Suggestions, Mistakes</h3>
+            <h3>Mistakes, Suggestions, Contact</h3>
+            <p>Help keep FreeSac up to date.</p>
+            <br>
             <form id="contactForm">
-                Email:<br>
-                <input type="text" name="email" placeholder="Your Email (not required)"/><br>
-                Category:<br>
+                Your Email:
+                <br>
+                <input class="form-control" type="text" name="email" placeholder="Optional" />
+                <br>Contact Reason:
+                <br>
                 <select class="form-control" name="category">
-                    <option value="" disabled selected>Choose Issue Type</option>
-                    <option value="wrong">Wrong data</option>
+                    <option value="" disabled selected>Choose Issue</option>
+                    <option value="wrong">Wrong Data / Correction</option>
                     <option value="feedback">Feedback</option>
-                    <option value="inquiry">General Inquiries</option>
-                </select><br>
-                Comments:<br>
-                <textarea name="body" class="form-control" placeholder="Let us know how to improve"></textarea><br>
-                <input type="submit" class="sort" ng-click="submit = 'true'" value="submit" /><br> <span ng-show="submit == 'true'" class="red">Thank you! We'll respond to your comments soon.</span>
+                    <option value="inquiry">General Questions</option>
+                </select>
+                <br> Comments:
+                <br>
+                <textarea name="body" class="form-control" placeholder="Tell us how to improve"></textarea>
+                <br>
+                <input type="submit" class="sort btn btn-info" ng-click="submit = 'true'" value="Send" />
+                <br>
+                <span ng-show="submit == 'true'" class="red">Thank you! We'll respond to your comments soon.</span>
             </form>
         </div>
         <div class="module">
-            <h3>About foodlist</h3>
-            We compile resources for low income or homeless residents of Sacramento.
-            <h3>Donate link -- maybe</h3>
-            Pay for hosting bills via bitcoin, paypal, etc.
+            <h3>About FreeSac</h3>
+            FreeSac lists free food for low income or homeless people in Sacramento. If you'd like to volunteer, email us at.
+            <br>
+            <br>
+            <h3>Donate</h3>
+            FreeSac needs help paying for services and hosting. Donate with credit card or bitcoin (with stripe link)
         </div>
     </div>
 
     <script>
         var frm = $('#contactForm');
         var seconds = new Date().getTime() / 1000;
-        frm.submit(function (ev) {
+        frm.submit(function(ev) {
             ev.preventDefault();
             $.ajax({
-               url: "https://script.google.com/macros/s/AKfycbwlcTE8BXyd4B23JfK7jQYBLOpI2nH8ECtFlpJHd2m0UQCe4ex2/exec",
-               type: "post",
-               data: frm.serialize()+"&time="+seconds,
-               success: function (data) {
-                   console.log(frm.serialize()+"&time="+seconds);
-               }
+                url: "https://script.google.com/macros/s/AKfycbwlcTE8BXyd4B23JfK7jQYBLOpI2nH8ECtFlpJHd2m0UQCe4ex2/exec",
+                type: "post",
+                data: frm.serialize() + "&time=" + seconds,
+                success: function(data) {
+                    console.log(frm.serialize() + "&time=" + seconds);
+                }
             });
 
 
