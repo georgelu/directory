@@ -40,17 +40,19 @@ display:inline-block;
     border-left-width: 10px;
 }
 
-.yellowleft {
+.greenleft {
     border-left-style: solid;
-    border-left-color: DarkKhaki;
+    border-left-color: green;
     border-left-width: 10px;
 }
-.greenright {
-    border-right-style:solid;
-    border-right-color: green;
-    border-right-width: 10px;
+
+.navtitle {
+    color:blue;
 }
 
+.entryfilter{
+    width:180px;
+}
 
 
 .list {
@@ -71,10 +73,7 @@ img {
   max-width: 100%;
 }
 h3 {
-  font-size: 16px;
   margin:0 0 0.3rem;
-  font-weight: normal;
-  font-weight:bold;
 }
 p {
   margin:0;

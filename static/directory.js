@@ -1,13 +1,13 @@
-var App = angular.module('App', ['ui','angular.filter','ui.bootstrap']);
+var App = angular.module('App', ['ui','angularMoment','angular.filter','ui.bootstrap']);
 
 App.controller('directoryCtrl', function($scope, $http, $uibModal, $log) {
-    $http.get('https://api.myjson.com/bins/3dnjr')
+    $http.get('../directory.json') <!--https://api.myjson.com/bins/3dnjr-->
        .then(function(res){
           $scope.directory = res.data;
         });
 
     //Search + Sort Filters
-    $scope.sortType     = 'timecode'; // set the default sort type
+    $scope.sortType     = 'next_event'; // set the default sort type
     $scope.sortReverse  = false;  // set the default sort order
     $scope.searchName   = '';     // set the default search/filter term
     $scope.submit     = 'false'; // did a user submit feedback?
@@ -24,7 +24,15 @@ App.controller('directoryCtrl', function($scope, $http, $uibModal, $log) {
                     return $scope.directory;
                 }
             }
-             });
+        });
+        moment().calendar(null, {
+    sameDay: '[Today]',
+    nextDay: '[Tomorrow]',
+    nextWeek: 'dddd',
+    lastDay: '[Yesterday]',
+    lastWeek: '[Last] dddd',
+    sameElse: 'DD/MM/YYYY'
+});
     };
 });
 
