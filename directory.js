@@ -1,7 +1,7 @@
 var App = angular.module('App', ['ui','angularMoment','angular.filter','ui.bootstrap']);
 
 App.controller('directoryCtrl', function($scope, $http, $uibModal, $log) {
-    $http.get('../directory.json') <!--https://api.myjson.com/bins/3dnjr-->
+    $http.get('directory.json') <!--https://api.myjson.com/bins/3dnjr-->
        .then(function(res){
           $scope.directory = res.data;
         });
