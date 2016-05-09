@@ -20,9 +20,9 @@
 
 <body ng-controller="directoryCtrl" ng-app="App">
 
-    <div id="resourcesmod" class="col-lg-8">
+    <div id="resourcesmod" class="col-lg-9">
         <div class="navbar">
-            <h2 class="navtitle">FoodSac</h2>
+            <h2>FoodSac</h2>
             <input class="search" ng-model="searchName" placeholder="Search" />
 
             <select class="form-control entryfilter">
@@ -31,9 +31,7 @@
             </select>
             <select class="form-control entryfilter">
                 <option value="" disabled selected>Services</option>
-                <option>Meals + Soup Kitchen</option>
-                <option>Groceries</option>
-                <option>Elderly (Congregate)</option>
+                <option ng-repeat="(key, value) in directory | filter:searchName | countBy: 'notes'"> {{ key }} ({{ value }})</option>
             </select>
             <select class="form-control entryfilter">
                 <option value="" disabled selected>Requirements</option>
@@ -87,7 +85,7 @@
         </div>
 
     </div>
-    <div class="col-lg-4" id="sidebar">
+    <div class="col-lg-3" id="sidebar">
         <div id="summarymod" class="module">
             <h3>For More Help</h3>
                 <p>Free food, housing, legal, and health resources: <a href="http://www.211sacramento.org/">211 online</a> or call 211</p>
@@ -125,7 +123,7 @@
             <h3>About FreeSac</h3>
             FreeSac lists free food for low income, homeless, and hungry people in Sacramento.
             <br>
-            <br> We're a free, open-source, and volunteer-run service. FreeSac was originally developed for the <a href="hack4sac.saccounty.net/#next">Sacramento hackathon</a>.
+            <br>We're a free and non-profit service created by volunteers.
             <br>
             <br>To learn more, volunteer, or donate, email geo@rge.lu.
         </div>
