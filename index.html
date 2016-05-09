@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Sacramento Free Food and Grocery Resources</title>
+    <link rel="shortcut icon" href="../static/sun.ico" />
+    <script src="/static/angular1.5.3.min.js"></script> <!--https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js-->
+    <script src="/static/jquery-2.2.2.min.js"></script><!--https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js-->
+    <script src="/static/angularui.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js-->
+    <script src="/static/angularfilter.min.js"></script><!--https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.8/angular-filter.min.js-->
+    <script src="/static/bootstrapui.min.js"></script><!--https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.5/ui-bootstrap-tpls.min.js-->
+    <script src="/static/moment.min.js"></script>
+    <script src="/static/angular-moment.min.js"></script>
+    <script src="/static/directory.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap.css"> <!--https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css-->
+    <link rel="stylesheet" type="text/css" href="../static/directory.css">
+</head>
+
+<body ng-controller="directoryCtrl" ng-app="App">
+
+    <div id="resourcesmod" class="col-lg-9">
+        <div class="navbar">
+            <h2>FoodSac</h2>
+            <input class="search" ng-model="searchName" placeholder="Search" />
+
+            <select class="form-control entryfilter">
+                <option value="" disabled selected>Neighborhoods</option>
+                <option ng-repeat="(key, value) in directory | filter:searchName | countBy: 'neighborhood'"> {{ key }} ({{ value }})</option>
+            </select>
+            <select class="form-control entryfilter">
+                <option value="" disabled selected>Services</option>
+                <option ng-repeat="(key, value) in directory | filter:searchName | countBy: 'notes'"> {{ key }} ({{ value }})</option>
+            </select>
+            <select class="form-control entryfilter">
+                <option value="" disabled selected>Requirements</option>
+                <option>None (Service is for everyone)</option>
+                <option>Elderly only</option>
+                <option>Youth + teen only</option>
+                <option>Women only</option>
+            </select>
+        </div>
+
+
+        <div ng-repeat="(key, value) in directory | orderBy:sortType:sortReverse | filter:searchName | groupBy: 'next_event'">
+            <div class="item item-divider">
+              <h3>
+                  <time>{{ key | amDateFormat: 'dddd - LL' }}</time>
+                  (<time am-time-ago="key"></time>)
+              </h3>
+            </div>
+
+            <div class="module" ng-repeat="resource in value | orderBy:'timecode'" ng-class="{redleft : resource.notes == 'Food distribution', orangeleft : resource.notes == 'USDA commodities',pinkleft: resource.notes == 'Congregate meal & food distribution'}">
+                <button type="button" class="btn btn-info modalbutton" ng-click="open()">More</button>
+                <b>{{resource.notes}}</b> at <b>{{resource.timecode}}</b>
+
+                <br> Neighborhood: {{resource.neighborhood}}
+                <br>
+                <br> <b>{{resource.name}}</b>
+                <br> {{resource.address}}
+                <br> {{resource.phone}}
+
+            </div>
+            <script type="text/ng-template" id="detailModal.html">
+                <div class="modal-header">
+                    <h3>More details on:</h3>
+                </div>
+                <div class="modal-body">
+                    More details on location, organization, etc.
+                    <br>
+                    Is this event is part of a series? Other details.
+                    <iframe
+                       width="300px"
+                       height="200px"
+                       frameborder="0" style="border:0"
+                       src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDtRBVZUB4tj8oX1dE0tOON0yMAzaU9KJ4&q=Space+Needle,Seattle+WA" allowfullscreen>
+                   </iframe>
+                   <br>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-warning" type="button" ng-click="cancel()">Close Details</button>
+                </div>
+            </script>
+        </div>
+
+    </div>
+    <div class="col-lg-3" id="sidebar">
+        <div id="summarymod" class="module">
+            <h3>For More Help</h3>
+                <p>Free food, housing, legal, and health resources: <a href="http://www.211sacramento.org/">211 online</a> or call 211</p>
+                <br> <p>The People's Guide: <a href="http://www.sachousingalliance.org/resources/">Spanish and English guides</a></p>
+                <br> <p>More Resources: <a href="http://www.homelessresourcesca.org/Cities/Sacramento.html">Homeless Resources CA</a></p>
+                <br> <p>Emergencies: call 911</p>
+            </ul>
+        </div>
+        <div id="feedbackmod" class="module">
+            <h3>Mistakes, Suggestions, Contact</h3>
+            <p>Your help keeps FreeSac up to date.</p>
+            <br>
+            <form id="contactForm">
+                Your Email:
+                <br>
+                <input class="form-control" type="text" name="email" placeholder="Optional" />
+                <br>Contact Reason:
+                <br>
+                <select class="form-control" name="category">
+                    <option value="" disabled selected>Choose Issue</option>
+                    <option value="wrong">Wrong Data / Correction</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="inquiry">General Questions</option>
+                </select>
+                <br> Comments:
+                <br>
+                <textarea name="body" class="form-control" placeholder="Tell us about mistakes and suggest improvements"></textarea>
+                <br>
+                <input type="submit" class="sort btn btn-info" ng-click="submit = 'true'" value="Send" />
+                <br>
+                <span ng-show="submit == 'true'" class="red">Thank you! We'll respond to your comments soon.</span>
+            </form>
+        </div>
+        <div class="module">
+            <h3>About FreeSac</h3>
+            FreeSac lists free food for low income, homeless, and hungry people in Sacramento.
+            <br>
+            <br>We're a free and non-profit service created by volunteers.
+            <br>
+            <br>To learn more, volunteer, or donate, email geo@rge.lu.
+        </div>
+    </div>
+
+    <script>
+        console.log(
+            moment().format('dddd')
+        );
+        var frm = $('#contactForm');
+        var seconds = new Date().getTime() / 1000;
+        frm.submit(function(ev) {
+            ev.preventDefault();
+            $.ajax({
+                url: "https://script.google.com/macros/s/AKfycbwlcTE8BXyd4B23JfK7jQYBLOpI2nH8ECtFlpJHd2m0UQCe4ex2/exec",
+                type: "post",
+                data: frm.serialize() + "&time=" + seconds,
+                success: function(data) {
+                    console.log(frm.serialize() + "&time=" + seconds);
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
